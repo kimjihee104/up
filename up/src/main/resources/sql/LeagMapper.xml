@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LeagMapper">
+ <resultMap id="leagSelectMap" type="leag">
+    <result property="leagNo"    column="leag_no"      jdbcType="NUMERIC"/>
+    <result property="leagName"     column="lname"  jdbcType="VARCHAR"/>
+   <result property="vote1"    column="art_vt1"      jdbcType="NUMERIC"/>
+    <result property="voteObject1"    column="art_pd1"      jdbcType="VARCHAR"/>
+     <result property="vote2"    column="art_vt2"      jdbcType="NUMERIC"/>
+    <result property="voteObject2"    column="art_pd2"      jdbcType="VARCHAR"/>
+    <result property="progress"    column="leag_part"        jdbcType="VARCHAR"/>
+    <association property="seasonNo"    column="sea_no"  select="SeasonMapper.getSeasonMapperbyNO"    javaType="project.domain.Season"/>
+    <association property="artist1"    column="artist_no1" select="ArtistMapper.getArtist"     javaType="project.domain.Artist"/>
+    <association property="artist2"    column="artist_no2" select="ArtistMapper.getArtist"     javaType="project.domain.Artist"/>
+  </resultMap>
+ 
+ 
+ 
+ <insert id="addLeagMapper" parameterType="leag">
+    INSERT
+    INTO LEAG(leag_no,lname,art_vt1,art_pd1,art_vt2,art_pd2,leag_part,sea_no,artist_no1,artist_no2)
+    VALUES (seq_leag_leag_no.NEXTVAL,
+             #{leagName:VARCHAR},
+             #{vote1:INTEGER},
+             #{voteObject1:VARCHAR},
+             #{vote2:INTEGER},
+             #{voteObject2:VARCHAR},
+             #{progress:VARCHAR},
+             #{seasonNo.seasonNo},
+             #{artist1.artistNo},
+             #{artist2.artistNo}
+             )
+  </insert>
+
+  <select id="getLeagListMapper" parameterType="int" resultMap="leagSelectMap">
+    SELECT *
+    FROM LEAG
+    WHERE sea_no= #{value}
+  </select>
+  
+    <select id="getSeasonlistMapper" resultMap="leagSelectMap">
+    SELECT *
+    FROM LEAG
+    ORDER BY sea_no DESC
+  </select>
+  
+  <update id="updateLeagVote1" parameterType="leag">
+   UPDATE LEAG
+      <set>
+        art_vt1=#{vote1}      
+       </set>
+      WHERE leag_no = #{leagNo}
+  </update>
+  
+    <update id="updateLeagVote2" parameterType="leag">
+   UPDATE LEAG
+      <set>
+        art_vt2=#{vote2}      
+       </set>
+      WHERE leag_no = #{leagNo}
+  </update>
+ 
+  <select id="getLeag" parameterType="int" resultMap="leagSelectMap">
+  select 
+  * 
+  from LEAG
+  where leag_no=#{value}
+  </select>
+  
+  <select id="getleagList" parameterType="hashmap"   resultMap="leagSelectMap">
+  select
+  *
+  from LEAG
+  where sea_no=#{seasonNo} AND leag_part=#{progress}
+  </select>
+  
+  <select id="getMaxLeagProgress" resultType="String">
+  select MIN(leag_part) from leag
+  </select>
+  
+ 
+</mapper>

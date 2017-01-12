@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SeasonMapper">
+ <resultMap id="seasonSelectMap" type="Season">
+    <result property="seasonNo"    column="sea_no"      jdbcType="NUMERIC"/>
+    <result property="seasonName"     column="sname"  jdbcType="VARCHAR"/>
+   <result property="seasonStart"    column="sea_st"      jdbcType="VARCHAR"/>
+    <result property="seasonEnd"    column="sea_ed"      jdbcType="VARCHAR"/>
+    <result property="state"        column="state"        jdbcType="VARCHAR"/>
+    <association property="seasonwinner"    column="artist_no2"  select="ArtistMapper.getArtist"    javaType="project.domain.Artist"/>
+    <association property="seasonsecondwinner"    column="artist_no" select="ArtistMapper.getArtist"     javaType="project.domain.Artist"/>
+   
+  </resultMap>
+ 
+ 
+ 
+ <insert id="addSeasonMapper" parameterType="Season">
+    INSERT
+    INTO SEASON(sea_no,sname,sea_st,sea_ed,state)
+    VALUES (seq_season_seasonno.NEXTVAL,
+             #{seasonName:VARCHAR},
+             #{seasonStart:VARCHAR},
+              #{seasonEnd:VARCHAR},
+              #{state:VARCHAR}
+             )
+  </insert>
+
+  <select id="getSeasonMapper" parameterType="String" resultMap="seasonSelectMap">
+    SELECT *
+    FROM SEASON
+    WHERE sname = #{seasonName:VARCHAR}
+  </select>
+  
+  
+    <select id="getSeasonMapperbyNO" parameterType="int" resultMap="seasonSelectMap">
+    SELECT *
+    FROM SEASON
+    WHERE sea_no = #{value}
+  </select>
+  
+    <select id="getSeasonlistMapper" resultMap="seasonSelectMap">
+    SELECT *
+    FROM SEASON
+    ORDER BY sea_no DESC
+  </select>
+  
+  
+    <select id= "getTotalCount" resultType="int">
+    SELECT COUNT(*)
+    FROM SEASON
+   </select>
+  
+  <select id="getMaxSeasonNo"  resultType="int">
+   select MAX(sea_no) from leag
+  </select>
+  
+  <update id="setEndSeason" parameterType="season">
+   UPDATE SEASON
+      <set>
+        state=#{state}      
+       </set>
+      WHERE sea_no = #{seasonNo}
+  </update>
+ 
+ 
+</mapper>

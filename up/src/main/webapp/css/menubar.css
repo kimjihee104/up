@@ -1,0 +1,363 @@
+hr{border-top: 5px solid #eee;
+	
+	
+}
+
+body.overflow-hidden {
+	overflow: hidden;
+}
+
+/**
+ * Menu Button
+ */
+.menu-button {
+	position: fixed;
+	padding: 12px 10px;
+	top: 150px;
+	z-index: 999;
+	transition: 1s;
+	background: rgba(254,82,76,1);
+	border: 2px solid rgba(254,82,76,1);
+}
+
+.menu-button span.close {
+	position: relative;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+.menu-button span.close, .menu-button span.close:before, .menu-button span.close:after
+	{
+	display: block;
+	width: 20px;
+	height: 2px;
+	background-color: #fff;
+	-webkit-transition-property: background-color, -webkit-transform;
+	-moz-transition-property: background-color, -moz-transform;
+	-o-transition-property: background-color, -o-transform;
+	transition-property: background-color, transform;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+.menu-button span.close:before, .menu-button span.close:after {
+	position: absolute;
+	content: "";
+}
+
+.menu-button span.close:before {
+	top: -7px;
+}
+
+.menu-button span.close:after {
+	top: 7px;
+}
+
+.menu-button.open {
+	-webkit-animation: fadeIn 1s;
+	-moz-animation: fadeIn 1s;
+	animation: fadeIn 1s;
+	transform: translateX(220px);
+	border: 2px solid #fff;
+}
+
+.menu-button.open span.close {
+	background-color: transparent;
+}
+
+.menu-button.open span.close:before {
+	-webkit-transform: translateY(7px) rotate(45deg);
+	-moz-transform: translateY(7px) rotate(45deg);
+	-ms-transform: translateY(7px) rotate(45deg);
+	-o-transform: translateY(7px) rotate(45deg);
+	transform: translateY(7px) rotate(45deg);
+}
+
+.menu-button.open span.close:after {
+	-webkit-transform: translateY(-7px) rotate(-45deg);
+	-moz-transform: translateY(-7px) rotate(-45deg);
+	-ms-transform: translateY(-7px) rotate(-45deg);
+	-o-transform: translateY(-7px) rotate(-45deg);
+	transform: translateY(-7px) rotate(-45deg);
+}
+
+.menu-button:hover {
+	cursor: pointer;
+}
+
+/**
+ * Navigaiton styles
+ */
+.menubar {
+	float: left;
+	width: 20px;
+	position: fixed;
+	height: 20px;
+	z-index: 999;
+}
+
+.menubar header {
+	float: left;
+	width: 220px;
+	background: rgba(254,82,76,1);
+	height: 60px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index:999;
+	transition: 1s;
+	transform: translateX(-220px);
+}
+
+.menubar header.open {
+	background-color: black;
+	-webkit-animation: openNav 1s;
+	-moz-animation: openNav 1s;
+	animation: openNav 1s;
+	transform: translateX(0px);
+}
+
+.menubar .posts {
+	float: left;
+	width: 220px;
+	height: calc(100% - 60px);
+	position: fixed;
+	top: 120px;
+	left: 0;
+	left: 0;
+	bottom: 0;
+	z-index:999;
+	transition: 1s;
+	transform: translateX(-220px);
+}
+
+.menubar .posts.open {
+	-webkit-animation: openNav 1s;
+	-moz-animation: openNav 1s;
+	animation: openNav 1s;
+	transform: translateX(0px);
+	background-color: #272828;
+}
+
+.menubar .posts .post {
+	display: block;
+	overflow: hidden;
+	color: #fff;
+	position: relative;
+}
+
+.menubar .posts .Userprofile {
+	display: block;
+	overflow: hidden;
+	color: #fff;
+	position: relative;
+}
+
+.menubar .posts .Userprofile img {
+	object-fit: cover;
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	padding:10px;
+}
+
+.menubar .posts .Userprofile:hover:after {
+	width: 12px;
+	height: 12px;
+	left: 5px;
+	margin-top: 1px;
+}
+
+.menubar .posts .post:hover:after {
+	width: 12px;
+	height: 12px;
+	left: 25px;
+	margin-top: 1px;
+}
+
+.menubar .posts .post.active:before {
+	border: 2px solid #ffffff;
+	border-radius: 20px;
+}
+
+.menubar .posts .post.active:after {
+	opacity: 1;
+}
+
+.menubar .posts .post.active h1 {
+	opacity: 1;
+}
+
+.menubar .posts .post.active p {
+	opacity: 1;
+}
+
+.menubar .posts .post.active span.timestamp {
+	opacity: 1;
+}
+
+.menubar .posts .post a {
+
+    color: #fff;
+    display: block;
+    padding: 1px 10px 1px 20px;
+    position: relative;
+    z-index: 999;
+    letter-spacing: 2px;
+    margin: 0px 0px 0px 0px;
+}
+
+.menubar .posts .post a:hover{
+
+    color:rgb(240, 114, 114);
+    display: block;
+    padding: 1px 10px 1px 20px;
+    position: relative;
+    z-index: 999;
+    letter-spacing: 2px;
+    margin: 0px 0px 0px 0px;
+
+}
+
+
+.menubar .posts hr {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+/* 프로필 사진 */
+.menubar .posts .Userprofile a {
+	padding: 5px;
+	text-decoration: none;
+	color: rgb(240, 114, 114);
+	display: block;
+	font-size: 2rem;
+	letter-spacing: 2px;
+	position: relative;
+	z-index: 999;
+	letter-spacing: 2px;
+}
+
+.menubar .posts .post a h1 {
+	opacity: 0.4;
+	font-size: 2rem;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	margin-top: 0;
+}
+
+.menubar .posts .post a p {
+	opacity: 0.4;
+	font-size: 1.4rem;
+	margin: 0;
+}
+
+/**
+ * Content Styles
+ */
+.content {
+	float: left;
+	width: 100%;
+	height: 2000px;
+	position: relative;
+	transition: 1s;
+}
+
+.content .overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	display: none;
+}
+
+/**
+ * Animation keyframes
+ */
+@
+-webkit-keyframes openNav {from { transform:translateX(-200px);
+	
+}
+
+to {
+	transform: translateX(0px);
+}
+
+}
+@
+-moz-keyframes openNav {from { transform:translateX(-200px);
+	
+}
+
+to {
+	transform: translateX(0px);
+}
+
+}
+@
+keyframes openNav {from { transform:translateX(-200px);
+	
+}
+
+to {
+	transform: translateX(0px);
+}
+
+}
+@
+-webkit-keyframes moveContent {from { transform:translateX(0px);
+	
+}
+
+to {
+	transform: translateX(200px);
+}
+
+}
+@
+-moz-keyframes moveContent {from { transform:translateX(0px);
+	
+}
+
+to {
+	transform: translateX(200px);
+}
+
+}
+@
+keyframes moveContent {from { transform:translateX(0px);
+	
+}
+
+to {
+	transform: translateX(200px);
+}
+
+}
+.posts #footer1 {
+	/* // 하단바를 하단에 고정 */
+	
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	color: #fff;
+
+}
+
+
+.menubar .posts #footer1 a {
+
+	font-weight:bold;
+	margin-bottom:15px;
+	text-decoration: none;
+	color: black;
+	display: block;
+	padding: 1px 10px 1px 10px;
+	position: relative;
+	z-index: 999;
+	font-size: 1.5rem;
+	letter-spacing: 2px;
+}

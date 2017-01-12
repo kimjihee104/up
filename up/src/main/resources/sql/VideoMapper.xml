@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VideoMapper">
+    <resultMap id="videoSelectMap" type="video">
+    <result property="videoNo"    column="vid_no"      jdbcType="NUMERIC"/>
+    <result property="heart"    column="vid_hat"      jdbcType="NUMERIC"/>
+    <result property="hits"    column="vid_hits"      jdbcType="NUMERIC"/>
+    <result property="title"   column="vid_title"      jdbcType="VARCHAR"/>
+    <result property="url"   column="vid_url"     jdbcType="VARCHAR" />
+    <result property="genre"   column="genre"     jdbcType="VARCHAR" />
+    <result property="app"   column="vid_app"   jdbcType="VARCHAR"  />
+    <result property="introduce"   column="vid_int"   jdbcType="VARCHAR"  />
+    <result property="text"   column="vid_text"   jdbcType="VARCHAR"  />
+    <association property="userNumber" column="user_no" select="UserMapper.getUserByNo" javaType="project.domain.User" />
+	<association property="artist" column="user_no" select="ArtistMapper.getArtist1" javaType="project.domain.Artist" /> 
+  </resultMap>
+  <!-- SQL : INSERT -->
+  <insert   id="addVideo"    parameterType="video"  keyColumn="vid_no" keyProperty="videoNo" useGeneratedKeys="true">
+    INSERT
+    INTO video( vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no) 
+    VALUES  (seq_video_vidno.NEXTVAL,#{heart:NUMERIC},#{hits:NUMERIC},#{title:VARCHAR},#{url:VARCHAR},#{genre:VARCHAR},#{app:VARCHAR}, #{introduce},#{text},#{userNumber.userNo} )
+   </insert>
+      
+   <select  id="getVideo"   parameterType="int" resultMap="videoSelectMap" >
+		SELECT *FROM video 
+		WHERE vid_no =#{value}
+   </select>   
+      
+      
+   <select  id="getmyVideolist"   parameterType="int" resultMap="videoSelectMap" >
+    SELECT  vid_url FROM video 
+    WHERE user_no=#{value}
+   </select>   
+      
+
+   <update  id="updateVideo" parameterType="video" >
+      UPDATE video
+      <set>
+        vid_title=#{title},
+        genre=#{genre},
+        vid_url = #{url},
+        vid_app= #{app},
+        vid_int=#{introduce},
+        vid_text=#{text} 
+       </set>
+      WHERE vid_no = #{videoNo}
+    </update>
+  
+    <select  id="getVideoList"   resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  ORDER BY vid_no DESC
+   </select>
+   
+   <select id= "getTotalCount" resultType="int">
+	    SELECT COUNT(*)
+	    FROM video
+   </select> 
+   
+   <delete id="deleteVideo" parameterType="int">
+	   DELETE FROM video 
+	   WHERE vid_no=#{videoNo}
+   
+   </delete>
+   
+    <update  id="updateHits" parameterType="video" >
+      UPDATE video
+      <set>
+        vid_hits=#{hits}
+       </set>
+      WHERE vid_no = #{videoNo}
+    </update>
+ 
+ 
+ 	   
+    <update  id="updateHeart" parameterType="video" >
+      UPDATE video
+      <set>
+        vid_hat=#{heart}
+       </set>
+      WHERE vid_no = #{videoNo}
+    </update>
+    
+    <select  id="getVideoListHeart"  resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  ORDER BY vid_hat DESC
+   </select>
+ 
+   
+    <select  id="getVideoListHits"  resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  ORDER BY vid_hits DESC
+   </select>
+   
+   <select  id="getVideoListGenre"  parameterType="string" resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  WHERE genre =#{genre}
+   </select>
+   
+      <select  id="getVideoListGenreHeart"  parameterType="string" resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  WHERE genre =#{genre}
+		  ORDER BY vid_hat DESC
+   </select>
+   
+      <select  id="getVideoListGenreHits"  parameterType="string" resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  WHERE genre =#{genre}
+		  ORDER BY vid_hits DESC
+   </select>
+   
+   <select  id="getLeagueList"  resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  Where vid_app='참여'
+   </select>
+   
+    <select  id="getLeagueListHeart"  resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  Where vid_app='참여'
+		  ORDER BY vid_hat DESC
+   </select>
+ 
+   
+    <select  id="getLeagueListHits"  resultMap="videoSelectMap" >
+		  SELECT vid_no ,vid_hat ,vid_hits, vid_title,vid_url,genre,vid_app,vid_int,vid_text,user_no 
+		  FROM video 
+		  Where vid_app='참여'
+		  ORDER BY vid_hits DESC
+   </select>
+   
+     <select id="getAddLeagueVideourllist" parameterType="string" resultMap="videoSelectMap">
+   SELECT vid_url FROM VIDEO
+   WHERE vid_app=#{value}
+   ORDER BY vid_hat DESC
+   </select>
+   
+    <select  id="getVideoListHeartTop10"  resultMap="videoSelectMap" >
+    <![CDATA[ 
+		 SELECT * FROM (SELECT * FROM video  ORDER BY vid_hat DESC) WHERE rownum<=10 
+  	]]>
+   </select>
+   
+   
+  	
+</mapper>

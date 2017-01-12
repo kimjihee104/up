@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ArtistMapper">
+    <resultMap id="artistSelectMap" type="artist">
+    <result property="artistNo"    column="artist_no"      jdbcType="NUMERIC"/>
+    <result property="artistName"   column="artist_name"      jdbcType="VARCHAR"/>
+    <result property="genre"   column="genre"     jdbcType="VARCHAR" />
+    <result property="image"   column="artist_pro"   jdbcType="VARCHAR"  />
+    <result property="introduce"   column="art_int"   jdbcType="VARCHAR"  />
+    <association property="userNumber" column="user_no" select="UserMapper.getUserByNo" javaType="project.domain.Artist" />
+  </resultMap>
+  <!-- SQL : INSERT -->
+  <insert   id="addArtist"    parameterType="artist" >
+    INSERT
+    INTO artists( artist_no,  artist_name,  genre,  artist_pro,  art_int,  user_no) 
+    VALUES   (seq_artist_artistno.NEXTVAL,#{artistName:VARCHAR},#{genre:VARCHAR},#{image:VARCHAR}, #{introduce},#{userNumber.userNo} )
+   </insert>
+      
+   <select  id="getArtist"  parameterType="int"  resultMap="artistSelectMap">
+    SELECT
+    *  
+    FROM artists 
+    WHERE ARTIST_NO = #{value}
+   </select>
+    
+     <select  id="getArtist1"  parameterType="int"  resultMap="artistSelectMap">
+    SELECT
+    *  
+    FROM artists ,users
+    WHERE artists.user_no=users.user_no AND users.user_no = #{value}
+   </select>
+    
+    
+   <select  id="getArtistList"  resultMap="artistSelectMap" >
+		  SELECT*FROM artists ORDER BY artist_no DESC
+   </select>
+   
+     <select id= "getTotalCount" resultType="int">
+    SELECT COUNT(*)
+    FROM artists
+   </select>
+ 
+  <select id="getLikeArtistList" parameterType="int"  resultMap="artistSelectMap">
+  select a.* 
+  from ART_LIKE al, ARTISTS a 
+  where al.ARTIST_NO=a.ARTIST_NO AND al.user_no=#{value}
+    </select> 
+    
+     <update  id="updateArtist" parameterType="artist" >
+      UPDATE artists
+      <set>
+        artist_name=#{artistName},
+        genre=#{genre},
+        artist_pro = #{image},
+        art_int= #{introduce} 
+       </set>
+      WHERE user_no = #{userNumber.userNo}
+    </update>
+    
+        
+   <select  id="getArtistListGenre"  parameterType="string" resultMap="artistSelectMap" >
+      SELECT *
+      FROM artists
+      WHERE genre =#{genre}
+   </select>
+    
+ 
+</mapper>

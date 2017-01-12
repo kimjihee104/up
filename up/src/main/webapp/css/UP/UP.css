@@ -1,0 +1,81 @@
+@import url(https://fonts.googleapis.com/css?family=Audiowide);
+	
+/* ////logo//// */
+
+#logo {
+  z-index:999;
+  position:fixed;
+  top:0;
+  left:30px;
+  
+}
+
+
+/*Neon*/
+
+#logoP {
+  display:inline-block;
+  text-align: center;
+  font-size: 5em;
+  margin: 0;
+}
+
+#logoA {
+  text-decoration: none;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+
+#logoP:nth-child(1) a {
+  color: #f07272;
+    font-family: Audiowide;
+    text-shadow: 1px 1px #fff;
+}
+
+#logoP:nth-child(1) a:hover {
+  -webkit-animation: neon5 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon5 1.5s ease-in-out infinite alternate;
+  animation: neon5 1.5s ease-in-out infinite alternate;
+}
+
+
+#logoP a:hover {
+  color: #ffffff;
+}
+
+
+/*glow for webkit*/
+
+
+@-webkit-keyframes neon5 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF9900, 0 0 70px #FF9900, 0 0 80px #FF9900, 0 0 100px #FF9900, 0 0 150px #FF9900;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900;
+  }
+}
+
+
+
+/*glow for mozilla*/
+
+
+
+
+
+
+
+
+/*REEEEEEEEEEESPONSIVE*/
+
+@media (max-width: 650px) {
+  #container {
+    width: 100%;
+  }
+  p {
+    font-size: 3.5em;
+  }
+}
